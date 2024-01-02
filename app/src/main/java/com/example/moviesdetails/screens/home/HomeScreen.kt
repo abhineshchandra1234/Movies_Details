@@ -1,6 +1,5 @@
 package com.example.moviesdetails.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -18,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.moviesdetails.MovieRow
+import com.example.moviesdetails.navigation.MovieScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +62,10 @@ fun MainContent(
             LazyColumn() {
                 items(items = movieList) {
                     MovieRow(movie = it) { movie ->
-                        Log.d("TAG", "MainContent: $movie")
+                        //Log.d("TAG", "MainContent: $movie")
+                        navController.navigate(
+                            route = MovieScreens.DetailsScreen.name
+                        )
                     }
                 }
             }
