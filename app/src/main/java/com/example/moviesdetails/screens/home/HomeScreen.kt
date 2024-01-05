@@ -16,8 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.moviesdetails.MovieRow
+import com.example.moviesdetails.model.Movie
+import com.example.moviesdetails.model.getMovies
 import com.example.moviesdetails.navigation.MovieScreens
+import com.example.moviesdetails.widgets.MovieRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,20 +44,7 @@ fun HomeScreen(navController: NavController) {
 fun MainContent(
     paddingValues: PaddingValues,
     navController: NavController,
-    movieList: List<String> =
-        listOf(
-            "Avatar",
-            "300",
-            "Harry Potter",
-            "Life",
-            "Hapiness",
-            "Cross the line",
-            "The Shawshank Redemption",
-            "The Godfather",
-            "The Dark Knight",
-            "The Godfather Part II",
-            "12 Angry Men"
-        )
+    movieList: List<Movie> = getMovies()
 ) {
     Surface(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
         Column(modifier = Modifier.padding(12.dp)) {
