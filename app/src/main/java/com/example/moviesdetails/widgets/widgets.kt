@@ -20,9 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.example.moviesdetails.model.Movie
 import com.example.moviesdetails.model.getMovies
@@ -60,16 +63,15 @@ fun MovieRow(
                 shape = RectangleShape,
                 shadowElevation = 4.dp
             ) {
-//                Icon(
-//                    imageVector = Icons.Default.AccountBox,
-//                    contentDescription = "Movie Image"
-//                )
+
                 Image(
-                    painter = rememberImagePainter(data = movie.images[0],
-                        builder = {
-                            crossfade(true)
-                            transformations(CircleCropTransformation())
-                        }),
+                    painter = rememberAsyncImagePainter(
+                        ImageRequest.Builder(LocalContext.current).data(data = movie.images[0])
+                            .apply(block = fun ImageRequest.Builder.() {
+                                crossfade(true)
+                                transformations(CircleCropTransformation())
+                            }).build()
+                    ),
                     contentDescription = "Movie Poster"
                 )
             }
