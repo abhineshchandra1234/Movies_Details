@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.example.moviesdetails.model.Movie
