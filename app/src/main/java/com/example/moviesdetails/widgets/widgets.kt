@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -30,8 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
@@ -43,8 +48,7 @@ import com.example.moviesdetails.model.getMovies
 @Preview
 @Composable
 fun MovieRow(
-    movie: Movie = getMovies()[0],
-    onItemClick: (String) -> Unit = {}
+    movie: Movie = getMovies()[0], onItemClick: (String) -> Unit = {}
 ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -53,14 +57,11 @@ fun MovieRow(
         modifier = Modifier
             .padding(4.dp)
             .fillMaxWidth()
-            .height(130.dp)
             .clickable {
                 onItemClick(movie.id)
-            },
-        shape = RoundedCornerShape(
+            }, shape = RoundedCornerShape(
             corner = CornerSize(16.dp)
-        ),
-        elevation = CardDefaults.cardElevation(
+        ), elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )
     ) {
@@ -80,38 +81,52 @@ fun MovieRow(
                     painter = rememberAsyncImagePainter(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(data = movie.images[0])
-                            .placeholder(R.drawable.ic_launcher_foreground)
-                            .crossfade(true)
-                            .transformations(CircleCropTransformation())
-                            .build()
-                    ),
-                    contentDescription = "Movie Poster"
+                            .placeholder(R.drawable.ic_launcher_foreground).crossfade(true)
+                            .transformations(CircleCropTransformation()).build()
+                    ), contentDescription = "Movie Poster"
                 )
             }
             Column(modifier = Modifier.padding(4.dp)) {
 
                 Text(
-                    text = movie.title,
-                    style = MaterialTheme.typography.headlineSmall
+                    text = movie.title, style = MaterialTheme.typography.headlineSmall
                 )
                 Text(
-                    text = "Director: ${movie.director}",
-                    style = MaterialTheme.typography.bodySmall
+                    text = "Director: ${movie.director}", style = MaterialTheme.typography.bodySmall
                 )
                 Text(
-                    text = "Released: ${movie.year}",
-                    style = MaterialTheme.typography.bodySmall
+                    text = "Released: ${movie.year}", style = MaterialTheme.typography.bodySmall
                 )
 
                 AnimatedVisibility(visible = expanded) {
 
                     Column {
-                        Text(text = "Hello There")
+                        Text(buildAnnotatedString {
+                            withStyle(
+                                style =
+                                SpanStyle(
+                                    color = Color.DarkGray,
+                                    fontSize = 13.sp
+                                )
+                            ) {
+                                append("Plot: ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    color = Color.DarkGray,
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            ) {
+                                    append(movie.plot)
+                            }
+                        })
                     }
                 }
 
                 Icon(
-                    imageVector = Icons.Filled.KeyboardArrowDown,
+                    imageVector = if (expanded) Icons.Filled.KeyboardArrowUp
+                    else Icons.Filled.KeyboardArrowDown,
                     contentDescription = "Down Arrow",
                     modifier = Modifier
                         .size(25.dp)
