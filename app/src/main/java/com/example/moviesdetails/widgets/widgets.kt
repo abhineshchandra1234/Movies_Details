@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.example.moviesdetails.R
 import com.example.moviesdetails.model.Movie
 import com.example.moviesdetails.model.getMovies
 
@@ -65,11 +66,12 @@ fun MovieRow(
 
                 Image(
                     painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = movie.images[0])
-                            .apply(block = fun ImageRequest.Builder.() {
-                                crossfade(true)
-                                transformations(CircleCropTransformation())
-                            }).build()
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(data = movie.images[0])
+                            .placeholder(R.drawable.ic_launcher_foreground)
+                            .crossfade(true)
+                            .transformations(CircleCropTransformation())
+                            .build()
                     ),
                     contentDescription = "Movie Poster"
                 )
