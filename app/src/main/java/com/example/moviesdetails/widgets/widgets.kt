@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -118,9 +119,23 @@ fun MovieRow(
                                     fontWeight = FontWeight.Bold
                                 )
                             ) {
-                                    append(movie.plot)
+                                append(movie.plot)
                             }
-                        })
+                        }, modifier = Modifier.padding(6.dp))
+
+                        Divider(modifier = Modifier.padding(3.dp))
+                        Text(
+                            text = "Director: ${movie.director}",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Text(
+                            text = "Actors: ${movie.actors}",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                        Text(
+                            text = "Rating: ${movie.rating}",
+                            style = MaterialTheme.typography.labelSmall
+                        )
                     }
                 }
 
